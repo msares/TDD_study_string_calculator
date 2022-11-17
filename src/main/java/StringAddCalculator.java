@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 public class StringAddCalculator {
     private static final String CUSTOM_SEP_RULES = "//(.)\n(.*)";
     private static final String DEFAULT_SEP_RULES = ",|:";
-    private static final String NEGATIVE_NUM_RULES = "^-[0-9.]";
+    private static final String NEGATIVE_NUM_RULES = "^-[\\d.]";
 
     public static int splitAndSum(String inputString) {
         if (isEmptyString(inputString)) {
