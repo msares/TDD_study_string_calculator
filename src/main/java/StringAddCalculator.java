@@ -10,7 +10,6 @@ public class StringAddCalculator {
     private static final String CUSTOM_SEP_STRING = "//(.)\n(.*)";
     private static final Pattern CUSTOM_SEP_RULES = Pattern.compile(CUSTOM_SEP_STRING);
 
-
     public static int splitAndSum(String inputString) {
         if (isEmptyString(inputString)) {
             return 0;
