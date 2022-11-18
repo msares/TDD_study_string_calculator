@@ -6,7 +6,6 @@ public class StringAddCalculator {
     private static final int EXTRACT_TARGET_STRING_PARAM = 2;
     private static final String NEGATIVE_NUM_ERROR = "Negative numbers are not allowed.";
     private static final String INVALID_TOKEN_ERROR = "You can only use numbers, not strings.";
-
     private static final String DEFAULT_SEP_STRING = ",|:";
     private static final String CUSTOM_SEP_STRING = "//(.)\n(.*)";
     private static final Pattern CUSTOM_SEP_RULES = Pattern.compile(CUSTOM_SEP_STRING);
