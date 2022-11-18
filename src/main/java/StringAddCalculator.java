@@ -2,9 +2,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringAddCalculator {
-    private static final String CUSTOM_SEP_RULES = "//(.)\n(.*)";
-    private static final String DEFAULT_SEP_RULES = ",|:";
-    private static final String NEGATIVE_NUM_RULES = "^-[\\d.]";
+    private static final int EXTRACT_DELIMITER_PARAM = 1;
+    private static final int EXTRACT_TARGET_STRING_PARAM = 2;
+    private static final String NEGATIVE_NUM_ERROR = "Negative numbers are not allowed.";
+    private static final String INVALID_TOKEN_ERROR = "You can only use numbers, not strings.";
+
+    private static final String DEFAULT_SEP_STRING = ",|:";
+    private static final String CUSTOM_SEP_STRING = "//(.)\n(.*)";
+    private static final Pattern CUSTOM_SEP_RULES = Pattern.compile(CUSTOM_SEP_STRING);
+
 
     public static int splitAndSum(String inputString) {
         if (isEmptyString(inputString)) {
@@ -13,7 +19,8 @@ public class StringAddCalculator {
         if (isSingleNumber(inputString)) {
             return Integer.parseInt(inputString);
         }
-        return calculate(getStringArray(inputString));
+        System.out.println(calculate(splitString(inputString)));
+        return calculate(splitString(inputString));
     }
 
     private static boolean isEmptyString(String input) {
@@ -24,32 +31,37 @@ public class StringAddCalculator {
         return input.length() == 1;
     }
 
-
-    private static String[] getStringArray(String input) {
-        Matcher matcher = Pattern.compile(CUSTOM_SEP_RULES).matcher(input);
+    private static String[] splitString(String input) {
+        Matcher matcher = CUSTOM_SEP_RULES.matcher(input);
         if (matcher.find()) {
-            return splitString(matcher.group(1), matcher.group(2));
+            return matcher.group(EXTRACT_TARGET_STRING_PARAM).split(matcher.group(EXTRACT_DELIMITER_PARAM));
         }
-        return splitString(DEFAULT_SEP_RULES, input);
+        return input.split(DEFAULT_SEP_STRING);
     }
 
-    private static String[] splitString(String delimiter, String targetString) {
-        isNumberNegative(targetString);
-        return targetString.split(delimiter);
+    //숫자가 아닌 문자 입력 시 예외처리
+    private static int getInteger(String input) {
+        int returnValue;
+        try {
+            returnValue = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(INVALID_TOKEN_ERROR, e);
+        }
+        if (checkNegativeNumbers(returnValue)) {
+            throw new RuntimeException(NEGATIVE_NUM_ERROR, new IllegalArgumentException());
+        }
+
+        return returnValue;
     }
 
-
-    private static void isNumberNegative(String targetString) {
-        Matcher matcher = Pattern.compile(NEGATIVE_NUM_RULES).matcher(targetString);
-        if (matcher.find()) {
-            throw new RuntimeException();
-        }
+    private static boolean checkNegativeNumbers(int input) {
+        return input < 0;
     }
 
     private static int calculate(String[] inputNumbers) {
         int result = 0;
         for (String inputNumber : inputNumbers) {
-            result += Integer.parseInt(inputNumber);
+            result += getInteger(inputNumber);
         }
         return result;
     }
