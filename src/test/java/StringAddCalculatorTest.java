@@ -42,3 +42,4 @@ public class StringAddCalculatorTest {
       .isInstanceOf(RuntimeException.class);
   }
 }
+
