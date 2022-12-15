@@ -1,5 +1,8 @@
 package lotto.view;
 
+import lotto.common.ErrorConstants;
+import lotto.common.ErrorConstants.MoneyError;
+import lotto.common.ErrorConstants.WinningNumError;
 import lotto.model.ScoreInformation;
 
 public class OutputView {
@@ -19,12 +22,30 @@ public class OutputView {
     System.out.println("총 수익률은 " + ratio + "입니다.");
   }
 
-  public void printMoneyErrorMessage() {
-    System.out.println(ViewConstants.ERROR_INPUT_MONEY);
+  public void printMoneyErrorMessage(MoneyError errorType) {
+    if (errorType == MoneyError.EMPTY_STR_ERR) {
+      System.out.println(ErrorConstants.EMPTY_STR_ERR_STRING);
+    }
+    if (errorType == MoneyError.NEGATIVE_NUM_ERR) {
+      System.out.println(ErrorConstants.NEGATIVE_NUM_ERR_STRING);
+    }
+    if (errorType == MoneyError.INVALID_FORMAT_ERR) {
+      System.out.println(ErrorConstants.INVALID_FORMAT_ERR_STRING);
+    }
   }
 
-  public void printWinNumErrorMessage() {
-    System.out.println(ViewConstants.ERROR_INPUT_WINNING_NUM);
+  public void printWinNumErrorMessage(WinningNumError errorType) {
+    if (errorType == WinningNumError.EMPTY_STR_ERR) {
+      System.out.println(ErrorConstants.EMPTY_STR_ERR_STRING);
+    }
+    if (errorType == WinningNumError.NUM_RANGE_ERR) {
+      System.out.println(ErrorConstants.NUM_RANGE_ERR_STRING);
+    }
+    if (errorType == WinningNumError.ARR_LENGTH_ERR) {
+      System.out.println(ErrorConstants.ARR_LENGTH_ERR_STRING);
+    }
+    if (errorType == WinningNumError.INVALID_FORMAT_ERR) {
+      System.out.println(ErrorConstants.INVALID_FORMAT_ERR_STRING);
+    }
   }
-
 }

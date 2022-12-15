@@ -1,28 +1,39 @@
 package lotto.model;
 
+import lotto.common.ErrorConstants.MoneyError;
+import lotto.common.ErrorConstants.WinningNumError;
 import lotto.common.LottoConstants;
+import lotto.view.OutputView;
 
 public class InputValueVerifier {
   LottoInformation lottoInfo;
+  OutputView outputView;
 
   public InputValueVerifier() {
     lottoInfo = new LottoInformation();
+    outputView = new OutputView();
   }
 
   public boolean verifyInputMoney(String input) {
     if (isEmptyString(input)) {
+      outputView.printMoneyErrorMessage(MoneyError.EMPTY_STR_ERR);
       return false;
     }
-    int money = StringConverter(input);
+    Integer money = StringConverter(input);
+    if (money == null) {
+      return false;
+    }
     if (isPositiveNumber(money)) {
       lottoInfo.setMoney(money);
       return true;
     }
+    outputView.printMoneyErrorMessage(MoneyError.NEGATIVE_NUM_ERR);
     return false;
   }
 
   public boolean verifyWinningNumbers(String input) {
     if (isEmptyString(input)) {
+      outputView.printWinNumErrorMessage(WinningNumError.EMPTY_STR_ERR);
       return false;
     }
     String[] winningNumberArr = input.split(LottoConstants.DELIMITER);
@@ -43,16 +54,18 @@ public class InputValueVerifier {
     return LottoConstants.NUM_ZERO <= inputNumber;
   }
 
-  private int StringConverter(String inputStr) {
+  private Integer StringConverter(String inputStr) {
     try {
       return Integer.parseInt(inputStr.trim());
     } catch (NumberFormatException e) {
-      throw e;
+      outputView.printMoneyErrorMessage(MoneyError.INVALID_FORMAT_ERR);
+      return null;
     }
   }
 
   private boolean verifyArrays(String[] numberArr) {
     if (!verifyArrayLength(numberArr)) {
+      outputView.printWinNumErrorMessage(WinningNumError.ARR_LENGTH_ERR);
       return false;
     }
     setWinningNumbers(numberArr);
@@ -68,10 +81,15 @@ public class InputValueVerifier {
   }
 
   private void verifyNumbers(String inputStr) {
-    int num = StringConverter(inputStr);
-    if (verifyNumberRange(num)) {
-      lottoInfo.addWinningNumbers(num);
+    Integer num = StringConverter(inputStr);
+    if (num == null) {
+      return;
     }
+    if (!verifyNumberRange(num)) {
+      outputView.printWinNumErrorMessage(WinningNumError.NUM_RANGE_ERR);
+      return;
+    }
+    lottoInfo.addWinningNumbers(num);
   }
 
   private void setWinningNumbers(String[] numberArr) {
