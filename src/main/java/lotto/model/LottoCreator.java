@@ -16,7 +16,6 @@ public class LottoCreator {
     return new Lotto(numList.subList(LottoConstants.NUM_ZERO, LottoConstants.LOTTO_NUM_LENGTH));
   }
 
-
   private List<Integer> setNumbers() {
     List<Integer> numList = new ArrayList<>();
     for (int i = 1; i <= LottoConstants.MAX_LOTTO_NUM; i++) {

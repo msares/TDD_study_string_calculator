@@ -6,7 +6,6 @@ import java.util.List;
 public class LottoInformation {
   public int money;
   public List<Integer> winningNumbers;
-  public List<Lotto> lottos;
 
   public LottoInformation() {
     winningNumbers = new ArrayList<>();
@@ -30,20 +29,5 @@ public class LottoInformation {
 
   public void setWinningNumbers(List<Integer> winningNumbers) {
     this.winningNumbers = winningNumbers;
-  }
-
-  public List<Lotto> getLottos() {
-    return lottos;
-  }
-
-  public void setLottos(List<Lotto> lottos) {
-    this.lottos = lottos;
-  }
-
-  public void addLottos(Lotto lotto) {
-    if (lottos == null) {
-      lottos = new ArrayList<>();
-    }
-    lottos.add(lotto);
   }
 }
