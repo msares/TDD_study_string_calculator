@@ -13,7 +13,6 @@ public class LottoController {
     lottoCreator = new LottoCreator();
   }
 
-
   public List<Lotto> createLottoList(int lottCnt) {
     List<Lotto> lottoList = new ArrayList<>();
     for (int i = 0; i < lottCnt; i++) {
@@ -21,5 +20,4 @@ public class LottoController {
     }
     return lottoList;
   }
-
 }
