@@ -48,15 +48,4 @@ public class ViewController {
     outputView.printWinningAward(winningCnt);
     outputView.printRevenueRatio(ratio);
   }
-
-  public void printError(errorType errorType) {
-    if (errorType == errorType.ERROR_INPUT_MONEY) {
-      outputView.printMoneyErrorMessage();
-      return;
-    }
-    if (errorType == errorType.ERROR_INPUT_WINNING_NUM) {
-      outputView.printWinNumErrorMessage();
-      return;
-    }
-  }
 }
